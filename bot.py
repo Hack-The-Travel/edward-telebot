@@ -7,7 +7,7 @@ bot = telebot.TeleBot(TOKEN)
 
 
 @bot.message_handler(commands=['subscribe'])
-def command_start(message):
+def command_subscribe(message):
     chat_id = message.chat.id
     db_connection = sqlite3.connect(DB_NAME)
     cursor = db_connection.cursor()
