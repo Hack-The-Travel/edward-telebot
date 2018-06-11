@@ -12,5 +12,5 @@ Tell the bot to /unsubscribe when you want to stop receiving news.
 
 
 ### Commands
-subscribe  
-unsubscribe
+subscribe - subscribe the news  
+unsubscribe - unsubscribe the news
