@@ -16,7 +16,9 @@ def command_help(message):
     chat_id = message.chat.id
     bot.send_message(
         chat_id,
-        'I can help you keep up to date with news from Russian online travel market. Add me to contacts and wait...'
+        '\n'.join([
+            'I can help you keep up to date with news from Russian online travel market.',
+            'Add me to contacts and wait for messages...'])
     )
 
 
