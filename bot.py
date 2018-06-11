@@ -1,13 +1,22 @@
 # -*- coding: utf-8 -*-
 import telebot
-from conf import TOKEN
+import sqlite3
+from conf import TOKEN, DB_NAME
 
 bot = telebot.TeleBot(TOKEN)
 
 
 @bot.message_handler(commands=['start'])
 def command_start(message):
-    print('New connection:', message.chat.id)
+    chat_id = message.chat.id
+    db_connection = sqlite3.connect(DB_NAME)
+    cursor = db_connection.cursor()
+    cursor.execute('SELECT chat_id FROM chat where chat_id={}'.format(chat_id))
+    if len(cursor.fetchall()) == 0:
+        cursor.execute('INSERT INTO chat (chat_id) VALUES ({})'.format(chat_id))
+        db_connection.commit()
+        print('New connection:', chat_id)
+    db_connection.close()
     command_help(message)
 
 
