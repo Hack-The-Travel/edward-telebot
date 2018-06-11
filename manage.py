@@ -12,3 +12,4 @@ if __name__ == '__main__':
         created_at integer(4) not null default (strftime('%s','now'))
     )''')
     db_connection.commit()
+    db_connection.close()
