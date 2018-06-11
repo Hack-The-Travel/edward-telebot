@@ -22,6 +22,17 @@ def command_subscribe(message):
     bot.send_message(chat_id, 'You have been subscribed.')
 
 
+@bot.message_handler(commands=['unsubscribe'])
+def command_unsubscribe(message):
+    chat_id = message.chat.id
+    db_connection = sqlite3.connect(DB_NAME)
+    cursor = db_connection.cursor()
+    cursor.execute("DELETE from chat where id={}".format(chat_id))
+    db_connection.commit()
+    db_connection.close()
+    bot.send_message(chat_id, 'You have been unsubscribed.')
+
+
 @bot.message_handler(commands=['help'])
 def command_help(message):
     chat_id = message.chat.id
