@@ -36,6 +36,7 @@ def command_subscribe(message):
                VALUES ({id}, '{username}', '{first_name}', '{last_name}', '{type}')
             '''.format(id=chat_id, username=message.chat.username, first_name=message.chat.first_name,
                        last_name=message.chat.last_name, type=message.chat.type)
+    execute_sql(query)
     bot.send_message(chat_id, 'You have been subscribed.')
 
 
