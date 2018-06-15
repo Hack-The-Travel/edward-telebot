@@ -1,10 +1,10 @@
-Roger: Magnificent Roger Bot
+Edward England Bot
 ============================
 
 ## Telegram bot settings
 
 ### Description
-Hello! My name is Magnificent Roger.
+Hello! My name is Edward England.
 I can help you keep up to date with news from Russian online travel market.
 
 Send /subscribe to start receiving news.  
