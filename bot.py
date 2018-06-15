@@ -21,7 +21,7 @@ def broadcast(messages):
         if message.chat.id not in ADMIN_IDS:
             continue
         if message.content_type == 'text':
-            if message.text.startwith('/'):
+            if message.text.startswith('/'):
                 continue  # ignore commands
             query = 'SELECT id FROM chat ORDER BY created_at ASC LIMIT 10'
             chat_ids = execute_sql(query)
