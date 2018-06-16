@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import telebot
 import sqlite3
+import time
 from conf import TOKEN, DB_NAME, ADMIN_IDS
+import logging
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -59,5 +61,12 @@ def command_help(message):
     )
 
 
-bot.set_update_listener(broadcast)
-bot.polling()
+if __name__ == '__main__':
+    bot.set_update_listener(broadcast)
+    while True:
+        try:
+            bot.polling(none_stop=True, timeout=60)
+        except Exception as e:
+            bot.stop_polling()
+            logging.critical(e, exc_info=True)
+            time.sleep(10)
