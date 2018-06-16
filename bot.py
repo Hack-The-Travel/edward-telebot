@@ -70,6 +70,7 @@ def command_status(message):
     else:
         bot.send_message(chat_id, 'Everything is ok. Stay in touch.')
 
+
 if __name__ == '__main__':
     bot.set_update_listener(broadcast)
     while True:
