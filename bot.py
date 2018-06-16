@@ -61,6 +61,15 @@ def command_help(message):
     )
 
 
+@bot.message_handler(commands=['status'])
+def command_status(message):
+    chat_id = message.chat.id
+    if chat_id in ADMIN_IDS:
+        chats_number = execute_sql('SELECT count(1) from chat')[0][0]
+        bot.send_message(chat_id, 'Uptime: {}\nNumber of subscriptions: {}'.format(0, chats_number))
+    else:
+        bot.send_message(chat_id, 'Everything is ok. Stay in touch.')
+
 if __name__ == '__main__':
     bot.set_update_listener(broadcast)
     while True:
