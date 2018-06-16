@@ -1,2 +1,0 @@
-Roger: Magnificent Roger Bot
-============================
