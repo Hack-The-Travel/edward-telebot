@@ -62,13 +62,13 @@ def command_help(message):
 
 
 def do_polling():
-    try:
-        bot.polling(none_stop=True, timeout=60)
-    except Exception as e:
-        bot.stop_polling()
-        logging.critical(e, exc_info=True)
-        time.sleep(10)
-        do_polling()
+    while True:
+        try:
+            bot.polling(none_stop=True, timeout=60)
+        except Exception as e:
+            bot.stop_polling()
+            logging.critical(e, exc_info=True)
+            time.sleep(10)
 
 
 if __name__ == '__main__':
