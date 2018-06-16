@@ -72,7 +72,7 @@ def command_status(message):
         bot.send_message(
             chat_id,
             '\n'.join([
-                'up: {} days, {}:{}'.format(int(uptime//86400), int(uptime//3600), int((uptime//60)%60)),
+                'up {} days, {:02d}:{:02d}'.format(int(uptime//86400), int(uptime//3600), int((uptime//60)%60)),
                 'Number of subscriptions: {}'.format(chats_number)
             ])
         )
