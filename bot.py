@@ -70,10 +70,13 @@ def command_status(message):
         print('Debug. chats_nymber =', chats_number)
         chats_number = chats_number[0][0]
         uptime = time.time() - start_time
-        bot.send_message(chat_id, '\n'.join[
-            'up: {} days, {}:{}'.format(int(uptime//86400), int(uptime//3600), int((uptime//60)%60)),
-            'Number of subscriptions: {}'.format(chats_number)
-        ])
+        bot.send_message(
+            chat_id,
+            '\n'.join([
+                'up: {} days, {}:{}'.format(int(uptime//86400), int(uptime//3600), int((uptime//60)%60)),
+                'Number of subscriptions: {}'.format(chats_number)
+            ])
+        )
     else:
         bot.send_message(chat_id, 'Everything is ok. Stay in touch.')
 
