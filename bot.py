@@ -5,6 +5,7 @@ import time
 from conf import TOKEN, DB_NAME, ADMIN_IDS
 import logging
 
+start_time = time.time()
 bot = telebot.TeleBot(TOKEN)
 
 
@@ -59,6 +60,23 @@ def command_help(message):
             'I can help you keep up to date with news from Russian online travel market.',
             'Add me to contacts and wait for messages...'])
     )
+
+
+@bot.message_handler(commands=['status'])
+def command_status(message):
+    chat_id = message.chat.id
+    if chat_id in ADMIN_IDS:
+        chats_number = execute_sql('SELECT count(1) from chat')[0][0]
+        uptime = time.time() - start_time
+        bot.send_message(
+            chat_id,
+            '\n'.join([
+                'up {} days, {:02d}:{:02d}'.format(int(uptime//86400), int(uptime//3600), int((uptime//60)%60)),
+                'Number of subscriptions: {}'.format(chats_number)
+            ])
+        )
+    else:
+        bot.send_message(chat_id, 'Everything is ok. Stay in touch.')
 
 
 if __name__ == '__main__':
