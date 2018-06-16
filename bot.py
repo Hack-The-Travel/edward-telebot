@@ -66,8 +66,7 @@ def command_help(message):
 def command_status(message):
     chat_id = message.chat.id
     if chat_id in ADMIN_IDS:
-        chats_number = execute_sql('SELECT count(1) from chat')
-        chats_number = chats_number[0][0]
+        chats_number = execute_sql('SELECT count(1) from chat')[0][0]
         uptime = time.time() - start_time
         bot.send_message(
             chat_id,
