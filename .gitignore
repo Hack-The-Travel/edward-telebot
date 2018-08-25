@@ -2,7 +2,6 @@
 *.py[cod]
 
 conf.py
-edward.db
 
 # Mr Developer
 .idea/
