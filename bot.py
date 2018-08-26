@@ -64,6 +64,10 @@ def command_help(message):
     )
 
 
+def runtime(start_time=None, check_time=None):
+    return 'Up'
+
+
 @bot.message_handler(commands=['status'])
 def command_status(message):
     chat_id = message.chat.id
