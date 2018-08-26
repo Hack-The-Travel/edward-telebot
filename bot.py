@@ -85,7 +85,7 @@ if __name__ == '__main__':
     bot.set_update_listener(broadcast)
     while True:
         try:
-            bot.polling(none_stop=False, timeout=60)
+            bot.polling()
         except Exception as e:
             bot.stop_polling()
             logging.critical(e, exc_info=True)
