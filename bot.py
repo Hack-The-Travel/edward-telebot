@@ -65,7 +65,11 @@ def command_help(message):
 
 
 def runtime(start_time=None, check_time=None):
-    return 'Up'
+    start_time = bot_start_time if start_time is None else start_time
+    check_time = time.time() if check_time is None else check_time
+    delta = int(start_time) - int(check_time)
+    delta_days = delta // 86400
+    return 'Up {} day.'.format(delta_days)
 
 
 @bot.message_handler(commands=['status'])
