@@ -3,11 +3,16 @@
 Release History
 ===============
 
-0.1.1 (2018-08-26)
+0.2.0 (2018-08-26)
 ++++++++++++++++++
+
+**Improvements**
+
+- Add command `status`.
 
 **Bugfixes**
 
+- Implement error handler for control connection timeouts.
 - Implement error handler for broadcasting to prevent infinity loop with message sending.
 
 
