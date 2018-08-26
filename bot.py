@@ -69,7 +69,8 @@ def runtime(start_time=None, check_time=None):
     check_time = time.time() if check_time is None else check_time
     delta = int(start_time) - int(check_time)
     delta_days = delta // 86400
-    return 'Up {} day.'.format(delta_days)
+    delta_days_plural_form = 's' if delta_days > 1 else ''
+    return 'Up {} day{}.'.format(delta_days, delta_days_plural_form)
 
 
 @bot.message_handler(commands=['status'])
