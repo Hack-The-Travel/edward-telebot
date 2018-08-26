@@ -21,18 +21,17 @@ def execute_sql(query):
 
 def broadcast(messages):
     for message in messages:
-        if message.chat.id not in ADMIN_IDS:
+        if (message.chat.id not in ADMIN_IDS
+                or message.content_type != 'text'
+                or message.text.startswith('/')):
             continue
-        if message.content_type == 'text':
-            if message.text.startswith('/'):
-                continue  # ignore commands
-            query = 'SELECT id FROM chat ORDER BY created_at ASC LIMIT 10'
-            chat_ids = execute_sql(query)
-            for chat_id in chat_ids:
-                try:
-                    bot.send_message(chat_id[0] + 1, message.text)
-                except telebot.apihelper.ApiException as e:
-                    logging.error(e)
+        query = 'SELECT id FROM chat ORDER BY created_at ASC LIMIT 10'
+        chat_ids = execute_sql(query)
+        for chat_id in chat_ids:
+            try:
+                bot.send_message(chat_id[0] + 1, message.text)
+            except telebot.apihelper.ApiException as e:
+                logging.error(e)
 
 
 @bot.message_handler(commands=['subscribe'])
