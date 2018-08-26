@@ -3,6 +3,12 @@
 Release History
 ===============
 
+0.2.1 (2018-08-26)
+++++++++++++++++++
+**Bugfixes**
+- Fix uptime output format (command /status).
+
+
 0.2.0 (2018-08-26)
 ++++++++++++++++++
 
