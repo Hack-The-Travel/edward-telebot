@@ -5,7 +5,7 @@ import time
 from conf import TOKEN, DB_NAME, ADMIN_IDS
 import logging
 
-start_time = time.time()
+bot_start_time = time.time()
 bot = telebot.TeleBot(TOKEN)
 
 
@@ -69,7 +69,7 @@ def command_status(message):
     chat_id = message.chat.id
     if chat_id in ADMIN_IDS:
         chats_number = execute_sql('SELECT count(1) from chat')[0][0]
-        uptime = time.time() - start_time
+        uptime = time.time() - bot_start_time
         bot.send_message(
             chat_id,
             '\n'.join([
