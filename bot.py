@@ -29,7 +29,7 @@ def broadcast(messages):
         chat_ids = execute_sql(query)
         for chat_id in chat_ids:
             try:
-                bot.send_message(chat_id[0] + 1, message.text)
+                bot.send_message(chat_id[0], message.text)
             except telebot.apihelper.ApiException as e:
                 logging.error(e)
 
