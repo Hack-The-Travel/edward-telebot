@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 import telebot
 import sqlite3
+import time
 from conf import TOKEN, DB_NAME, ADMIN_IDS
+import logging
 
+start_time = time.time()
 bot = telebot.TeleBot(TOKEN)
 
 
@@ -18,15 +21,17 @@ def execute_sql(query):
 
 def broadcast(messages):
     for message in messages:
-        if message.chat.id not in ADMIN_IDS:
+        if (message.chat.id not in ADMIN_IDS
+                or message.content_type != 'text'
+                or message.text.startswith('/')):
             continue
-        if message.content_type == 'text':
-            if message.text.startswith('/'):
-                continue  # ignore commands
-            query = 'SELECT id FROM chat ORDER BY created_at ASC LIMIT 10'
-            chat_ids = execute_sql(query)
-            for chat_id in chat_ids:
+        query = 'SELECT id FROM chat ORDER BY created_at ASC LIMIT 10'
+        chat_ids = execute_sql(query)
+        for chat_id in chat_ids:
+            try:
                 bot.send_message(chat_id[0], message.text)
+            except telebot.apihelper.ApiException as e:
+                logging.error(e)
 
 
 @bot.message_handler(commands=['subscribe'])
@@ -59,5 +64,29 @@ def command_help(message):
     )
 
 
-bot.set_update_listener(broadcast)
-bot.polling()
+@bot.message_handler(commands=['status'])
+def command_status(message):
+    chat_id = message.chat.id
+    if chat_id in ADMIN_IDS:
+        chats_number = execute_sql('SELECT count(1) from chat')[0][0]
+        uptime = time.time() - start_time
+        bot.send_message(
+            chat_id,
+            '\n'.join([
+                'up {} days, {:02d}:{:02d}'.format(int(uptime//86400), int(uptime//3600), int((uptime//60)%60)),
+                'Number of subscriptions: {}'.format(chats_number)
+            ])
+        )
+    else:
+        bot.send_message(chat_id, 'Everything is ok. Stay in touch.')
+
+
+if __name__ == '__main__':
+    bot.set_update_listener(broadcast)
+    while True:
+        try:
+            bot.polling()
+        except Exception as e:
+            bot.stop_polling()
+            logging.critical(e, exc_info=True)
+            time.sleep(10)
