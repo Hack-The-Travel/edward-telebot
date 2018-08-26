@@ -29,7 +29,10 @@ def broadcast(messages):
             query = 'SELECT id FROM chat ORDER BY created_at ASC LIMIT 10'
             chat_ids = execute_sql(query)
             for chat_id in chat_ids:
-                bot.send_message(chat_id[0], message.text)
+                try:
+                    bot.send_message(chat_id[0] + 1, message.text)
+                except telebot.apihelper.ApiException as e:
+                    logging.error(e)
 
 
 @bot.message_handler(commands=['subscribe'])
@@ -83,7 +86,7 @@ if __name__ == '__main__':
     bot.set_update_listener(broadcast)
     while True:
         try:
-            bot.polling(none_stop=True, timeout=60)
+            bot.polling(none_stop=False, timeout=60)
         except Exception as e:
             bot.stop_polling()
             logging.critical(e, exc_info=True)
